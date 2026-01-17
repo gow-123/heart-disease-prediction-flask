@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import pickle
 import numpy as np
 
@@ -13,8 +13,10 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
+    if request.method == 'GET':
+        return redirect('/')
     try:
         male=float(request.form.get('male',0))
         age=float(request.form.get('age',0))
@@ -72,3 +74,4 @@ def predict():
         )
 if __name__ == "__main__":
     app.run()
+
